@@ -150,7 +150,7 @@ export default function LandingPage() {
                 {
                   icon: Zap,
                   title: "Instant Generation",
-                  desc: "From product image to finished video in under 90 seconds.",
+                  desc: "From product image to finished video in minutes.",
                   color: "text-indigo-400"
                 }
               ].map((feature, i) => (
