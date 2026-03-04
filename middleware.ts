@@ -11,13 +11,13 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(key) {
+        get(key: string) {
           return request.cookies.get(key)?.value;
         },
-        set(key, value, options) {
+        set(key: string, value: string, options?: { path?: string; maxAge?: number; domain?: string; secure?: boolean; sameSite?: "lax" | "strict" | "none" }) {
           supabaseResponse.cookies.set(key, value, options);
         },
-        remove(key, options) {
+        remove(key: string, options?: { path?: string; domain?: string }) {
           supabaseResponse.cookies.set(key, "", { ...options, maxAge: 0 });
         },
       },
