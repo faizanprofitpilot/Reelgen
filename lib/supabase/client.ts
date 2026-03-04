@@ -6,16 +6,16 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(key) {
+        get(key: string) {
           if (typeof document === "undefined") return null;
           const cookies = parse(document.cookie ?? "");
           return cookies[key];
         },
-        set(key, value, options) {
+        set(key: string, value: string, options?: { path?: string; maxAge?: number; domain?: string; secure?: boolean; sameSite?: "lax" | "strict" | "none" }) {
           if (typeof document === "undefined") return;
           document.cookie = serialize(key, value, { path: "/", ...options });
         },
-        remove(key, options) {
+        remove(key: string, options?: { path?: string; domain?: string }) {
           if (typeof document === "undefined") return;
           document.cookie = serialize(key, "", {
             path: "/",
