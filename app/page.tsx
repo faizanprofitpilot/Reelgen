@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Zap, Users, ArrowRight, PlayCircle, Video, Check, Package, Upload, Palette, Play } from "lucide-react";
 import { SUBSCRIPTION_PLANS, CREDIT_PACKS } from "@/lib/billing/plans";
 import { LandingAnimate } from "@/components/LandingAnimate";
+import { createClient } from "@/lib/supabase/server";
 
 const PLAN_FEATURES: Record<string, string[]> = {
   Starter: [
@@ -33,7 +34,10 @@ const PLAN_FEATURES: Record<string, string[]> = {
   ],
 };
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
@@ -54,14 +58,24 @@ export default function LandingPage() {
             </a>
           </div>
           <div className="flex items-center gap-4 shrink-0 z-10">
-            <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">
-              Sign In
-            </Link>
-            <Link href="/login">
-              <Button className="bg-blue-600 hover:bg-blue-500 text-white border-0 shadow-lg shadow-blue-500/20">
-                Get Started
-              </Button>
-            </Link>
+            {user ? (
+              <Link href="/dashboard">
+                <Button className="bg-blue-600 hover:bg-blue-500 text-white border-0 shadow-lg shadow-blue-500/20">
+                  Go to dashboard
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">
+                  Sign In
+                </Link>
+                <Link href="/login">
+                  <Button className="bg-blue-600 hover:bg-blue-500 text-white border-0 shadow-lg shadow-blue-500/20">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -84,9 +98,9 @@ export default function LandingPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <Link href="/login">
+            <Link href={user ? "/dashboard" : "/login"}>
               <Button size="lg" className="h-12 px-8 text-base bg-blue-600 hover:bg-blue-500 text-white border-0 shadow-lg shadow-blue-500/25 rounded-full">
-                Start Creating Free
+                {user ? "Go to dashboard" : "Start Creating Free"}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -228,11 +242,11 @@ export default function LandingPage() {
                         </li>
                       ))}
                     </ul>
-                    <Link href="/login" className="mt-8 block">
+                    <Link href={user ? "/dashboard" : "/login"} className="mt-8 block">
                       <Button
                         className={`w-full rounded-xl h-11 ${isPopular ? "bg-blue-600 hover:bg-blue-500 text-white border-0 shadow-lg shadow-blue-500/20" : "border-white/20 bg-white/5 hover:bg-white/10 text-white"}`}
                       >
-                        Get {name}
+                        {user ? "Go to dashboard" : `Get ${name}`}
                       </Button>
                     </Link>
                   </div>
@@ -255,9 +269,9 @@ export default function LandingPage() {
                   </p>
                 </div>
               </div>
-              <Link href="/login" className="shrink-0">
+              <Link href={user ? "/dashboard" : "/login"} className="shrink-0">
                 <Button variant="outline" className="border-white/20 hover:bg-white/10 hover:text-white rounded-xl px-6">
-                  Buy 100 credits
+                  {user ? "Go to dashboard" : "Buy 100 credits"}
                 </Button>
               </Link>
               </div>
@@ -316,9 +330,9 @@ export default function LandingPage() {
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 relative z-10">
                 Join thousands of marketers creating high-performing UGC creatives with AI.
               </p>
-              <Link href="/login">
+              <Link href={user ? "/dashboard" : "/login"}>
                 <Button size="lg" className="h-14 px-10 text-lg bg-white text-black hover:bg-white/90 rounded-full relative z-10">
-                  Start Creating Now
+                  {user ? "Go to dashboard" : "Start Creating Now"}
                 </Button>
               </Link>
             </div>
