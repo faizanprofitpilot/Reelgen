@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { getStripe, getOrCreateCustomer, getStripePriceIds } from "@/lib/stripe";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const APP_URL = process.env.VERCEL ? "https://reelgen.xyz" : (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000");
 
 export async function POST(request: NextRequest) {
   try {

@@ -159,7 +159,7 @@ export async function POST(
       const type = res.headers.get("content-type") || "image/jpeg";
       avatarDataUri = `data:${type};base64,${buf.toString("base64")}`;
     } else if (avatarPath.startsWith("/")) {
-      const origin = request.nextUrl?.origin ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+      const origin = request.nextUrl?.origin ?? (process.env.VERCEL ? "https://reelgen.xyz" : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"));
       const res = await fetch(origin + avatarPath);
       if (!res.ok) throw new Error(`Failed to fetch avatar image: ${res.status}`);
       const buf = Buffer.from(await res.arrayBuffer());

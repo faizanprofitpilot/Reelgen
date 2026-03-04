@@ -50,7 +50,7 @@ The seed script creates 25 placeholder avatar records. You can:
 npm run dev
 ```
 
-Visit http://localhost:3000
+Visit http://localhost:3000 (or https://reelgen.xyz in production)
 
 ## Verification
 

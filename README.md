@@ -65,7 +65,7 @@ STRIPE_PRICE_STARTER=price_...   # $29/mo subscription
 STRIPE_PRICE_GROWTH=price_...    # $79/mo subscription
 STRIPE_PRICE_PRO=price_...       # $169/mo subscription
 STRIPE_PRICE_PACK_100=price_...  # $35 one-time 100 credits
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=https://reelgen.xyz
 ```
 
 Get these values from:
@@ -187,7 +187,7 @@ Ensure all environment variables from `.env.local` are set in Vercel:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_STARTER`, `STRIPE_PRICE_GROWTH`, `STRIPE_PRICE_PRO`, `STRIPE_PRICE_PACK_100`
-- `NEXT_PUBLIC_APP_URL` (e.g. `https://your-app.vercel.app`)
+- `NEXT_PUBLIC_APP_URL` (e.g. `https://reelgen.xyz`; use `http://localhost:3000` for local dev)
 
 ## Manual Testing Checklist
 
