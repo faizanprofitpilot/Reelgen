@@ -9,17 +9,17 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(key) {
+        get(key: string) {
           return cookieStore.get(key)?.value;
         },
-        set(key, value, options) {
+        set(key: string, value: string, options?: { path?: string; maxAge?: number; domain?: string; secure?: boolean; sameSite?: "lax" | "strict" | "none" }) {
           try {
             cookieStore.set(key, value, options);
           } catch {
             // Called from a Server Component where setting cookies is not allowed.
           }
         },
-        remove(key, options) {
+        remove(key: string, options?: { path?: string; domain?: string }) {
           try {
             cookieStore.set(key, "", { ...options, maxAge: 0 });
           } catch {
