@@ -11,13 +11,20 @@
 ### 1. Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 2. Supabase Database Setup
 
 1. Go to your Supabase project SQL Editor
-2. Run the migration: Copy and paste contents of `supabase/migrations/001_initial_schema.sql`
+2. Run **all migrations in order** (001 through 007):
+   - `supabase/migrations/001_initial_schema.sql`
+   - `supabase/migrations/002_storage_uploads.sql`
+   - `supabase/migrations/003_custom_avatar.sql`
+   - `supabase/migrations/004_male_avatars_public.sql`
+   - `supabase/migrations/005_credits_billing.sql`
+   - `supabase/migrations/006_stripe_billing.sql`
+   - `supabase/migrations/007_free_plan_10_credits.sql`
 3. Run the seed: Copy and paste contents of `supabase/seed.sql`
 
 ### 3. Supabase Storage Setup
@@ -29,7 +36,7 @@ npm install
 
 ### 4. Environment Variables
 
-Create `.env.local`:
+Copy `.env.example` to `.env.local` and fill in values, or create `.env.local` with:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
@@ -47,7 +54,7 @@ The seed script creates 25 placeholder avatar records. You can:
 ### 6. Run Development Server
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Visit http://localhost:3000 (or https://reelgen.xyz in production)

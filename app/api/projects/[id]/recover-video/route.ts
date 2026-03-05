@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { getVideoUrlByTaskId } from "@/lib/runware";
+import { isUrlAllowedForFetch } from "@/lib/url-allowlist";
 
 /**
  * Recover a failed project by providing either:
@@ -30,6 +31,13 @@ export async function POST(
     if (!videoUrl || !videoUrl.startsWith("http")) {
       return NextResponse.json(
         { error: "Provide either a video URL or a Runware task ID" },
+        { status: 400 }
+      );
+    }
+
+    if (!isUrlAllowedForFetch(videoUrl)) {
+      return NextResponse.json(
+        { error: "Video URL not allowed. Use a Runware task ID or an HTTPS URL from an allowed domain." },
         { status: 400 }
       );
     }
@@ -79,8 +87,9 @@ export async function POST(
       });
 
     if (uploadError) {
+      console.error("Recover video storage upload error:", uploadError);
       return NextResponse.json(
-        { error: `Failed to save video: ${uploadError.message}` },
+        { error: "Failed to save video" },
         { status: 500 }
       );
     }

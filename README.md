@@ -15,7 +15,7 @@ Reelgen enables ecommerce sellers to generate realistic UGC-style product videos
 
 ## Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+ and pnpm (or npm)
 - Supabase account and project
 - Runware API key
 
@@ -24,17 +24,22 @@ Reelgen enables ecommerce sellers to generate realistic UGC-style product videos
 ### 1. Clone and Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
+
+(Or `npm install` if you prefer; the repo uses pnpm and `pnpm-lock.yaml`.)
 
 ### 2. Supabase Setup
 
 1. Create a new Supabase project at [supabase.com](https://supabase.com)
-2. Go to SQL Editor and run the migration:
-   ```bash
-   # Copy contents of supabase/migrations/001_initial_schema.sql
-   # Paste and execute in Supabase SQL Editor
-   ```
+2. **Database Migrations**: Run **all migrations in order** in the Supabase SQL Editor. A new install must execute each file from 001 through 007:
+   - `supabase/migrations/001_initial_schema.sql`
+   - `supabase/migrations/002_storage_uploads.sql`
+   - `supabase/migrations/003_custom_avatar.sql`
+   - `supabase/migrations/004_male_avatars_public.sql`
+   - `supabase/migrations/005_credits_billing.sql`
+   - `supabase/migrations/006_stripe_billing.sql`
+   - `supabase/migrations/007_free_plan_10_credits.sql`
 3. Run the seed script:
    ```bash
    # Copy contents of supabase/seed.sql
@@ -50,7 +55,7 @@ npm install
 
 ### 3. Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory (e.g. copy from `.env.example` and fill in your values):
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -82,7 +87,7 @@ Upload avatar images to the `avatars` storage bucket. The seed script creates 10
 ### 5. Run Development Server
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -188,6 +193,10 @@ Ensure all environment variables from `.env.local` are set in Vercel:
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_STARTER`, `STRIPE_PRICE_GROWTH`, `STRIPE_PRICE_PRO`, `STRIPE_PRICE_PACK_100`
 - `NEXT_PUBLIC_APP_URL` (e.g. `https://reelgen.xyz`; use `http://localhost:3000` for local dev)
+
+## Testing
+
+The app is currently validated via manual testing using the checklist below. Automated tests (e.g. critical-path or e2e) are recommended for production hardening.
 
 ## Manual Testing Checklist
 

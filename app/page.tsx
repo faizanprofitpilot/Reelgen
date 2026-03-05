@@ -124,7 +124,8 @@ export default async function LandingPage() {
             "/landing%20illustrations/final.mp4",
             "/landing%20illustrations/final%20(3).mp4",
             "/landing%20illustrations/final%20(4).mp4",
-            "/landing%20illustrations/final%20(5).mp4"
+            "/landing%20illustrations/final%20(5).mp4",
+            "/landing%20illustrations/final%20(6).mp4"
           ]
             .reduce<string[]>((acc, _, __, arr) => acc.length ? acc : [...arr, ...arr], [])
             .map((src, i) => (

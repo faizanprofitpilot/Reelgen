@@ -28,12 +28,13 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protect dashboard, create, and projects routes
+  // Protect dashboard, create, projects, and billing routes
   if (
     !user &&
     (request.nextUrl.pathname.startsWith("/dashboard") ||
       request.nextUrl.pathname.startsWith("/create") ||
-      request.nextUrl.pathname.startsWith("/projects"))
+      request.nextUrl.pathname.startsWith("/projects") ||
+      request.nextUrl.pathname.startsWith("/billing"))
   ) {
     const redirectUrl = new URL("/login", request.url);
     return NextResponse.redirect(redirectUrl);
